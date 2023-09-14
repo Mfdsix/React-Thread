@@ -1,0 +1,19 @@
+.no__data{
+    padding: 50px;
+    text-align: center;
+    color: #333;
+}
+
+.no__data img{
+    height: 90px;
+}
+
+.error__wrap{
+    text-align: center;
+}
+
+.error__code{
+    font-size: 128px;
+    font-weight: bold;
+    color: #333;
+}
