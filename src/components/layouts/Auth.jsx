@@ -1,13 +1,18 @@
-import React from "react";
-import AppFooter from "../common/AppFooter";
+import React from 'react'
+import AppFooter from '../common/AppFooter'
+import PropTypes from 'prop-types'
 
-function AuthLayout({ children }) {
+function AuthLayout ({ children }) {
   return (
     <>
       <main>{children}</main>
       <AppFooter />
     </>
-  );
+  )
 }
 
-export default AuthLayout;
+AuthLayout.propTypes = {
+  children: PropTypes.element
+}
+
+export default AuthLayout

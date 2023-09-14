@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
-function AppFooter(){
-    return <footer>
+function AppFooter () {
+  return <footer>
         Created By Mfdsix . 2023
     </footer>
 }

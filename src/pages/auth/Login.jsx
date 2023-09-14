@@ -1,8 +1,8 @@
-import React from "react";
-import AuthLayout from "../../components/layouts/Auth";
-import LoginForm from "../../components/auth/LoginForm";
+import React from 'react'
+import AuthLayout from '../../components/layouts/Auth'
+import LoginForm from '../../components/auth/LoginForm'
 
-function Login() {
+function Login () {
   return (
     <>
       <AuthLayout>
@@ -18,7 +18,7 @@ function Login() {
         </div>
       </AuthLayout>
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login

@@ -1,8 +1,8 @@
-import React from "react";
-import AuthLayout from "../../components/layouts/Auth";
-import RegisterForm from "../../components/auth/RegisterForm";
+import React from 'react'
+import AuthLayout from '../../components/layouts/Auth'
+import RegisterForm from '../../components/auth/RegisterForm'
 
-function Register() {
+function Register () {
   return (
     <>
       <AuthLayout>
@@ -18,7 +18,7 @@ function Register() {
         </div>
       </AuthLayout>
     </>
-  );
+  )
 }
 
-export default Register;
+export default Register

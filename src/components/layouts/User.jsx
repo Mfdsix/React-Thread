@@ -1,17 +1,18 @@
-import React from "react";
-import AppHeader from "../common/AppHeader";
-import AppFooter from "../common/AppFooter";
+import React from 'react'
+import AppHeader from '../common/AppHeader'
+import AppFooter from '../common/AppFooter'
+import PropTypes from 'prop-types'
 
-import { UserConsumer } from "../../data/context/UserContext";
+import { UserConsumer } from '../../data/context/UserContext'
 
-function UserLayout({ needAuth = true, children }) {
+function UserLayout ({ needAuth = true, children }) {
   return (
     <>
       <UserConsumer>
         {({ user }) => {
           if (!user && needAuth) {
-            alert("Anda harus login terlebih dahulu");
-            return (window.location.href = "/login");
+            alert('Anda harus login terlebih dahulu')
+            return (window.location.href = '/login')
           }
 
           return (
@@ -20,11 +21,16 @@ function UserLayout({ needAuth = true, children }) {
               <main>{children}</main>
               <AppFooter />
             </>
-          );
+          )
         }}
       </UserConsumer>
     </>
-  );
+  )
 }
 
-export default UserLayout;
+UserLayout.propTypes = {
+  needAuth: PropTypes.bool,
+  children: PropTypes.element
+}
+
+export default UserLayout

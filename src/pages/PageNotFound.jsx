@@ -1,7 +1,7 @@
-import React from "react";
-import UserLayout from "../components/layouts/User";
+import React from 'react'
+import UserLayout from '../components/layouts/User'
 
-export default function PageNotFound() {
+export default function PageNotFound () {
   return (
     <>
       <UserLayout needAuth={false}>
@@ -11,5 +11,5 @@ export default function PageNotFound() {
         </div>
       </UserLayout>
     </>
-  );
+  )
 }

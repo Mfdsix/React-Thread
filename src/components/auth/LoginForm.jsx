@@ -1,73 +1,73 @@
-import React, { useEffect, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
-import { AuthRequest } from "../../data/api/dicoding-notes";
-import { Link, useNavigate } from "react-router-dom";
-import { setAccessToken } from "../../data/api/http";
+import React, { useEffect, useState } from 'react'
+import { FaSpinner } from 'react-icons/fa'
+import { AuthRequest } from '../../data/api/dicoding-notes'
+import { Link, useNavigate } from 'react-router-dom'
+import { setAccessToken } from '../../data/api/http'
 import {
   UserConsumer
-} from "../../data/context/UserContext";
+} from '../../data/context/UserContext'
 
-function LoginForm() {
-  const navigate = useNavigate();
+function LoginForm () {
+  const navigate = useNavigate()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false);
-  const [formDisabled, setFormDisabled] = useState(false);
+  const [formLoading, setFormLoading] = useState(false)
+  const [formDisabled, setFormDisabled] = useState(false)
 
   const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
   const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+    setPassword(e.target.value)
+  }
 
   const onFormSubmit = async (e, setUser) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    setFormLoading(true);
+    setFormLoading(true)
 
     const { error, message, data } = await AuthRequest.login({
       email,
-      password,
-    });
+      password
+    })
 
-    setFormLoading(false);
+    setFormLoading(false)
     if (!error) {
-      setAccessToken(data.accessToken);
-      await getUserData(setUser);
+      setAccessToken(data.accessToken)
+      await getUserData(setUser)
 
-      return navigate("/");
+      return navigate('/')
     } else {
-      setEmailError(message);
+      setEmailError(message)
     }
-  };
+  }
 
   const getUserData = async (setUser) => {
-    const { error, message, data } = await AuthRequest.profile();
+    const { error, message, data } = await AuthRequest.profile()
 
-    if(!error) return setUser(data);
-    return setEmailError(message);
+    if (!error) return setUser(data)
+    return setEmailError(message)
   }
 
   useEffect(() => {
     if (!email || !password) {
-      if (!email) setEmailError("Email must be filled");
-      if (!password) setPasswordError("Password must be filled");
+      if (!email) setEmailError('Email must be filled')
+      if (!password) setPasswordError('Password must be filled')
 
-      setFormDisabled(true);
+      setFormDisabled(true)
     }
 
     return () => {
-      setEmailError("");
-      setPasswordError("");
-      setFormDisabled(false);
-    };
-  }, [email, password]);
+      setEmailError('')
+      setPasswordError('')
+      setFormDisabled(false)
+    }
+  }, [email, password])
 
   return (
     <>
@@ -116,17 +116,17 @@ function LoginForm() {
                       type="submit"
                       className="btn btn__submit"
                     >
-                      {formLoading ? <FaSpinner /> : "Save"}
+                      {formLoading ? <FaSpinner /> : 'Save'}
                     </button>
                   </div>
                 </form>
               </div>
             </>
-          );
+          )
         }}
       </UserConsumer>
     </>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm

@@ -1,49 +1,49 @@
-import React from "react";
-import Router from "./router";
+import React from 'react'
+import Router from './router'
 
-import { ThemeProvider } from "./data/context/ThemeContext";
-import { LangProvider } from "./data/context/LangContext";
-import { UserProvider } from "./data/context/UserContext";
-import { AuthRequest } from "./data/api/dicoding-notes";
+import { ThemeProvider } from './data/context/ThemeContext'
+import { LangProvider } from './data/context/LangContext'
+import { UserProvider } from './data/context/UserContext'
+import { AuthRequest } from './data/api/dicoding-notes'
 
-const LOCAL_THEME_KEY = "LOCAL_THEME";
-const LOCAL_LANG_KEY = "LOCAL_LANG";
+const LOCAL_THEME_KEY = 'LOCAL_THEME'
+const LOCAL_LANG_KEY = 'LOCAL_LANG'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       initializing: true,
       themeContext: {
-        theme: localStorage.getItem(LOCAL_THEME_KEY) || "light",
+        theme: localStorage.getItem(LOCAL_THEME_KEY) || 'light',
         toggleTheme: () => {
           this.setState((prevState) => {
             const newTheme =
-              prevState.themeContext.theme === "light" ? "dark" : "light";
-            localStorage.setItem(LOCAL_THEME_KEY, newTheme);
+              prevState.themeContext.theme === 'light' ? 'dark' : 'light'
+            localStorage.setItem(LOCAL_THEME_KEY, newTheme)
             return {
               themeContext: {
                 ...prevState.themeContext,
-                theme: newTheme,
-              },
-            };
-          });
-        },
+                theme: newTheme
+              }
+            }
+          })
+        }
       },
       langContext: {
-        lang: localStorage.getItem(LOCAL_LANG_KEY) || "id",
+        lang: localStorage.getItem(LOCAL_LANG_KEY) || 'id',
         toggleLang: (newLang) => {
           this.setState((prevState) => {
-            localStorage.setItem(LOCAL_LANG_KEY, newLang);
+            localStorage.setItem(LOCAL_LANG_KEY, newLang)
             return {
               langContext: {
                 ...prevState.langContext,
-                lang: newLang,
-              },
-            };
-          });
-        },
+                lang: newLang
+              }
+            }
+          })
+        }
       },
       userContext: {
         user: null,
@@ -52,36 +52,36 @@ class App extends React.Component {
             return {
               userContext: {
                 ...prevState.userContext,
-                user,
-              },
-            };
-          });
-        },
-      },
-    };
+                user
+              }
+            }
+          })
+        }
+      }
+    }
   }
 
-  async componentDidMount() {
-    const { error, data } = await AuthRequest.profile();
+  async componentDidMount () {
+    const { error, data } = await AuthRequest.profile()
 
     if (!error) {
-      this.state.userContext.setUser(data);
+      this.state.userContext.setUser(data)
     }
 
     this.setState(() => {
       return {
-        initializing: false,
-      };
-    });
+        initializing: false
+      }
+    })
   }
 
-  componentDidUpdate(){
-    document.documentElement.setAttribute('data-theme', this.state.themeContext.theme);
+  componentDidUpdate () {
+    document.documentElement.setAttribute('data-theme', this.state.themeContext.theme)
   }
 
-  render() {
+  render () {
     if (this.state.initializing) {
-      return null;
+      return null
     }
 
     return (
@@ -92,8 +92,8 @@ class App extends React.Component {
           </UserProvider>
         </LangProvider>
       </ThemeProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

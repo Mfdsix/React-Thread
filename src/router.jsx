@@ -1,15 +1,15 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-import Login from "./pages/auth/Login"
-import Register from "./pages/auth/Register"
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
 
-import Home from "./pages/Home";
-import Add from "./pages/notes/Add";
-import Detail from "./pages/notes/Detail";
-import PageNotFound from "./pages/PageNotFound";
+import Home from './pages/Home'
+import Add from './pages/notes/Add'
+import Detail from './pages/notes/Detail'
+import PageNotFound from './pages/PageNotFound'
 
-function Router() {
+function Router () {
   return (
     <>
       <Routes>
@@ -21,11 +21,10 @@ function Router() {
         <Route path="/new" element={<Add />} />
         <Route path="/:id" element={<Detail />} />
 
-
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
-  );
+  )
 }
 
-export default Router;
+export default Router

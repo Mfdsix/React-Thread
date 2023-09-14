@@ -1,19 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import { ThemeConsumer } from "../../data/context/ThemeContext";
-import { UserConsumer } from "../../data/context/UserContext";
-import { FaMoon, FaSun, FaSignOutAlt } from "react-icons/fa";
-import { setAccessToken } from "../../data/api/http";
+import { ThemeConsumer } from '../../data/context/ThemeContext'
+import { UserConsumer } from '../../data/context/UserContext'
+import { FaMoon, FaSun, FaSignOutAlt } from 'react-icons/fa'
+import { setAccessToken } from '../../data/api/http'
 
-function AppHeader() {
-
+function AppHeader () {
   const logout = (setUser) => {
-    let confirm = confirm("Logout from application ?");
+    const confirm = confirm('Logout from application ?')
 
-    if(confirm){
-      setAccessToken(null);
-      setUser(null);
+    if (confirm) {
+      setAccessToken(null)
+      setUser(null)
     }
   }
 
@@ -27,7 +26,7 @@ function AppHeader() {
                 <header>
                   <div className="header__brand">
                     <Link to="/">
-                      <h1>Puth's Diary</h1>
+                      <h1>Puth&apos;s Diary</h1>
                     </Link>
                   </div>
                   <div className="header__profile">
@@ -35,7 +34,7 @@ function AppHeader() {
                       onClick={() => toggleTheme()}
                       className="btn btn__transparent"
                     >
-                      {theme == "dark" ? <FaSun /> : <FaMoon />}
+                      {theme == 'dark' ? <FaSun /> : <FaMoon />}
                     </button>
                     <h3 className="header__username">{ user.name }</h3>
                     <img
@@ -51,13 +50,13 @@ function AppHeader() {
                     </button>
                   </div>
                 </header>
-              );
+              )
             }}
           </UserConsumer>
-        );
+        )
       }}
     </ThemeConsumer>
-  );
+  )
 }
 
-export default AppHeader;
+export default AppHeader
