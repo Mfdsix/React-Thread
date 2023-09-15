@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import ListItem from './ListItem'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -7,18 +9,22 @@ import {
 
 function ThreadList () {
   const {
-    authUser,
-    threads,
-    users
+    threads
   } = useSelector((states) => states)
-  const disptach = useDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    disptach(asyncPopulateUsersAndThreads())
-  }, [disptach])
+    dispatch(asyncPopulateUsersAndThreads())
+  }, [dispatch])
 
   return <>
-        <div>Thread List</div>
+        <div className='my-1'>
+          <h3>Thread List</h3>
+
+          { threads.map((thread) => (
+            <ListItem key={thread.id} thread={thread}/>
+          )) }
+        </div>
     </>
 }
 

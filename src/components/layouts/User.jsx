@@ -3,7 +3,6 @@ import AppHeader from '../common/AppHeader'
 import AppFooter from '../common/AppFooter'
 import PropTypes from 'prop-types'
 
-import { UserConsumer } from '../../data/context/UserContext'
 import { useSelector } from 'react-redux'
 
 function UserLayout ({ needAuth = true, children }) {
@@ -11,10 +10,10 @@ function UserLayout ({ needAuth = true, children }) {
     authUser
   } = useSelector((states) => states)
 
-  if (!authUser) {
-    alert('Anda harus login terlebih dahulu')
-    return (window.location.href = '/login')
-  }
+  // if (needAuth && !authUser) {
+  //   alert('Anda harus login terlebih dahulu')
+  //   return (window.location.href = '/login')
+  // }
 
   return (
     <>

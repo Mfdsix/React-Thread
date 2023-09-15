@@ -11,11 +11,11 @@ import {
 function asyncPopulateUsersAndThreads () {
   return async (dispatch) => {
     try {
-      const users = await AuthRequest.getAllUser()
-      const threads = await ThreadRequest.getAll()
+      const { error: userError, data: userData } = await AuthRequest.getAllUser()
+      const { error: threadError, data: threadData } = await ThreadRequest.getAll()
 
-      dispatch(receiveUsersActionCreator(users))
-      dispatch(reveiceThreadsActionCreator(threads))
+      if(!userError) dispatch(receiveUsersActionCreator(userData.users))
+      if(!threadError) dispatch(reveiceThreadsActionCreator(threadData.threads))
     } catch (error) {
       alert(error.message)
     }

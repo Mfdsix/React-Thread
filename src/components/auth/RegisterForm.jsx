@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 import {
   asyncRegisterUser
 } from '../../states/users/action'
+import { useDispatch } from 'react-redux'
 
 function RegisterForm () {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -30,11 +35,13 @@ function RegisterForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    asyncRegisterUser({
+    dispatch(asyncRegisterUser({
       name,
       email,
       password
-    })
+    }))
+
+    navigate("/")
   }
 
   useEffect(() => {

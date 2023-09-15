@@ -1,0 +1,74 @@
+.thread__item{
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+    padding: 15px;
+}
+
+.thread__user{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.thread__user img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.thread__user .thread__user__name{
+    margin-left: 10px;
+}
+
+.thread__content .thread__content__title{
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.thread__content .thread__content__title .thread__content__category{
+    background-color: var(--primary-color);
+    color: var(--body-bg-color);
+    padding: 3px 7px;
+    border-radius: 5px;
+    margin-top: 3px;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.thread__content .thread__content__body{
+    max-height: 95px;
+    overflow-y: hidden;
+}
+
+.thread__detail .thread__content .thread__content__body{
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.thread__action {
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.thread__action .thread__action__button{
+    margin: 0 15px;
+}
+
+.thread__action button{
+    background-color: transparent;
+    border: none;
+}
+
+.thread__action .thread__action__button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.thread__action .thread__action__button span{
+    display: inline-block;
+    margin-left: 8px;
+}

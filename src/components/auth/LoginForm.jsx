@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   asyncSetAuthUser
 } from '../../states/authUser/action'
 
 function LoginForm () {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,6 +32,8 @@ function LoginForm () {
     dispatch(asyncSetAuthUser({
       email, password
     }))
+
+    navigate('/')
   }
 
   useEffect(() => {
@@ -91,7 +94,7 @@ function LoginForm () {
                       type="submit"
                       className="btn btn__submit"
                     >
-                      {formLoading ? <FaSpinner /> : 'Save'}
+                      {formLoading ? <FaSpinner /> : 'Login'}
                     </button>
                   </div>
                 </form>

@@ -11,7 +11,7 @@ const VoteType = {
   NEUTRALVOTE: 'NEUTRALVOTE'
 }
 
-function reveiceThreadDetailActionCreator (thread) {
+function reveiceThreadDetailActionCreator (thread = null) {
   return {
     type: ActionType.RECEIVE_THREAD_DETAIL,
     payload: {
@@ -51,9 +51,9 @@ function setStatusVoteCommentActionCreator ({
 function asyncGetDetailThread (threadId) {
   return async (dispatch) => {
     try {
-      const { error, data } = await ThreadRequest.getAllUser()
+      const { error, data } = await ThreadRequest.getById(threadId)
 
-      if (!error) dispatch(reveiceThreadDetailActionCreator(data.thread))
+      if (!error) dispatch(reveiceThreadDetailActionCreator(data.detailThread))
     } catch (error) {
       alert(error.message)
     }
