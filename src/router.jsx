@@ -5,8 +5,7 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 
 import Home from './pages/Home'
-import Add from './pages/notes/Add'
-import Detail from './pages/notes/Detail'
+import ThreadDetail from './pages/thread/Detail'
 import PageNotFound from './pages/PageNotFound'
 
 function Router () {
@@ -18,8 +17,7 @@ function Router () {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/new" element={<Add />} />
-        <Route path="/:id" element={<Detail />} />
+        <Route path="/:threadId" element={<ThreadDetail />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

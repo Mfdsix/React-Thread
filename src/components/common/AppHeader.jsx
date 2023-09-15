@@ -1,61 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { ThemeConsumer } from '../../data/context/ThemeContext'
-import { UserConsumer } from '../../data/context/UserContext'
-import { FaMoon, FaSun, FaSignOutAlt } from 'react-icons/fa'
-import { setAccessToken } from '../../data/api/http'
+import { FaSignOutAlt } from 'react-icons/fa'
+import {
+  asyncUnsetAuthUser
+} from '../../states/authUser/action'
+import { useDispatch, useSelector } from 'react-redux'
 
 function AppHeader () {
-  const logout = (setUser) => {
-    const confirm = confirm('Logout from application ?')
+  const {
+    authUser
+  } = useSelector((states) => states)
+  const dispatch = useDispatch()
 
+  const logout = (e) => {
+    e.preventDefault()
+
+    const confirm = confirm('Logout from application ?')
     if (confirm) {
-      setAccessToken(null)
-      setUser(null)
+      dispatch(asyncUnsetAuthUser())
     }
   }
 
   return (
-    <ThemeConsumer>
-      {({ theme, toggleTheme }) => {
-        return (
-          <UserConsumer>
-            {({ user, setUser }) => {
-              return (
                 <header>
                   <div className="header__brand">
                     <Link to="/">
-                      <h1>Puth&apos;s Diary</h1>
+                      <h1>Puth&apos;s Forum</h1>
                     </Link>
                   </div>
                   <div className="header__profile">
-                    <button
-                      onClick={() => toggleTheme()}
-                      className="btn btn__transparent"
-                    >
-                      {theme == 'dark' ? <FaSun /> : <FaMoon />}
-                    </button>
-                    <h3 className="header__username">{ user.name }</h3>
+                    <h3 className="header__username">{ authUser ? authUser.name : 'Guest' }</h3>
                     <img
                       className="header__image"
                       src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
                       alt="User"
                     />
-                    <button
-                      onClick={() => logout(setUser)}
+
+                    {
+                      authUser
+                        ? <button
+                      onClick={logout}
                       className="btn btn__transparent"
                     >
                       <FaSignOutAlt />
                     </button>
+                        : <Link to="/login">Login</Link>}
                   </div>
                 </header>
-              )
-            }}
-          </UserConsumer>
-        )
-      }}
-    </ThemeConsumer>
   )
 }
 

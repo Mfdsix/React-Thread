@@ -2,11 +2,15 @@ import React from 'react'
 
 import UserLayout from '../components/layouts/User'
 
+import ThreadInput from '../components/thread/Input'
+import ThreadList from '../components/thread/List'
+
 function Home () {
   return (
     <>
       <UserLayout>
-        <p>home</p>
+        <ThreadInput/>
+        <ThreadList/>
       </UserLayout>
     </>
   )

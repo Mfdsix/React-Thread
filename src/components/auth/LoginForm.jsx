@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa'
-import { AuthRequest } from '../../data/api/dicoding-notes'
-import { Link, useNavigate } from 'react-router-dom'
-import { setAccessToken } from '../../data/api/http'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {
-  UserConsumer
-} from '../../data/context/UserContext'
+  asyncSetAuthUser
+} from '../../states/authUser/action'
 
 function LoginForm () {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,32 +25,12 @@ function LoginForm () {
     setPassword(e.target.value)
   }
 
-  const onFormSubmit = async (e, setUser) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    setFormLoading(true)
-
-    const { error, message, data } = await AuthRequest.login({
-      email,
-      password
-    })
-
-    setFormLoading(false)
-    if (!error) {
-      setAccessToken(data.accessToken)
-      await getUserData(setUser)
-
-      return navigate('/')
-    } else {
-      setEmailError(message)
-    }
-  }
-
-  const getUserData = async (setUser) => {
-    const { error, message, data } = await AuthRequest.profile()
-
-    if (!error) return setUser(data)
-    return setEmailError(message)
+    dispatch(asyncSetAuthUser({
+      email, password
+    }))
   }
 
   useEffect(() => {
@@ -70,13 +49,9 @@ function LoginForm () {
   }, [email, password])
 
   return (
-    <>
-      <UserConsumer>
-        {({ user, setUser }) => {
-          return (
             <>
               <div className="auth__body">
-                <form onSubmit={(e) => onFormSubmit(e, setUser)}>
+                <form onSubmit={onFormSubmit}>
                   <div className="form__group form__limit__char">
                     <input
                       value={email}
@@ -122,10 +97,6 @@ function LoginForm () {
                 </form>
               </div>
             </>
-          )
-        }}
-      </UserConsumer>
-    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { CommentRequest, VoteRequest } from '../../data/api/dicoding-forum'
+import { CommentRequest, ThreadRequest, VoteRequest } from '../../data/api/dicoding-forum'
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
@@ -44,6 +44,18 @@ function setStatusVoteCommentActionCreator ({
       userId,
       type,
       isRollback
+    }
+  }
+}
+
+function asyncGetDetailThread (threadId) {
+  return async (dispatch) => {
+    try {
+      const { error, data } = await ThreadRequest.getAllUser()
+
+      if (!error) dispatch(reveiceThreadDetailActionCreator(data.thread))
+    } catch (error) {
+      alert(error.message)
     }
   }
 }
@@ -113,6 +125,7 @@ export {
   reveiceThreadDetailActionCreator,
   addCommentActionCreator,
   setStatusVoteCommentActionCreator,
+  asyncGetDetailThread,
   asyncAddComment,
   asyncSetStatusVoteComment
 }

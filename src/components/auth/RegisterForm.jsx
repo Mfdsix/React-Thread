@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa'
-import { AuthRequest } from '../../data/api/dicoding-notes'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import {
+  asyncRegisterUser
+} from '../../states/users/action'
 
 function RegisterForm () {
-  const navigate = useNavigate()
-
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -30,21 +30,11 @@ function RegisterForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    setFormLoading(true)
-
-    const { error, message } = await AuthRequest.register({
+    asyncRegisterUser({
       name,
       email,
       password
     })
-
-    setFormLoading(false)
-    if (!error) {
-      alert('Registration success')
-      return navigate('/login')
-    } else {
-      setNameError(message)
-    }
   }
 
   useEffect(() => {
