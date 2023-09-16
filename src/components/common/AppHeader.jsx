@@ -40,7 +40,9 @@ function AppHeader() {
             <FaSignOutAlt />
           </button>
         ) : (
-          <Link to="/login">Login</Link>
+          <div className="ml-1">
+            <Link to="/login">Login</Link>
+          </div>
         )}
       </div>
     </header>

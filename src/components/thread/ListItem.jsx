@@ -5,7 +5,7 @@ import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from "react-icons/fa";
 
 import {
   VoteType,
-  asyncSetStatusVoteThread
+  asyncSetStatusVoteThread,
 } from "../../states/threads/action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,10 +17,14 @@ function ListItem({ thread }) {
   const owner = users.find((user) => user.id == thread.ownerId);
 
   const onVote = (type) => {
+    if (!authUser) {
+      return alert("Login to vote");
+    }
+
     dispatch(
       asyncSetStatusVoteThread({
         threadId: thread.id,
-        type
+        type,
       })
     );
   };
@@ -49,31 +53,27 @@ function ListItem({ thread }) {
         </div>
 
         <div className="thread__action">
-          {authUser && (
-            <>
-              <div className="thread__action__button">
-                <button onClick={(e) => onVote(VoteType.UPVOTE)}>
-                  {authUser && thread.upVotesBy.includes(authUser.id) ? (
-                    <FaThumbsUp color="green" />
-                  ) : (
-                    <FaThumbsUp />
-                  )}
-                  {thread.upVotesBy.length > 0 && (
-                    <span>{thread.upVotesBy.length}</span>
-                  )}
-                </button>
-              </div>
-              <div className="thread__action__button">
-                <button onClick={(e) => onVote(VoteType.DOWNVOTE)}>
-                  {authUser && thread.downVotesBy.includes(authUser.id) ? (
-                    <FaThumbsDown color="red" />
-                  ) : (
-                    <FaThumbsDown />
-                  )}
-                </button>
-              </div>
-            </>
-          )}
+          <div className="thread__action__button">
+            <button onClick={(e) => onVote(VoteType.UPVOTE)}>
+              {authUser && thread.upVotesBy.includes(authUser.id) ? (
+                <FaThumbsUp color="green" />
+              ) : (
+                <FaThumbsUp />
+              )}
+              {thread.upVotesBy.length > 0 && (
+                <span>{thread.upVotesBy.length}</span>
+              )}
+            </button>
+          </div>
+          <div className="thread__action__button">
+            <button onClick={(e) => onVote(VoteType.DOWNVOTE)}>
+              {authUser && thread.downVotesBy.includes(authUser.id) ? (
+                <FaThumbsDown color="red" />
+              ) : (
+                <FaThumbsDown />
+              )}
+            </button>
+          </div>
 
           {thread.totalComments > 0 && (
             <div className="thread__action__button">

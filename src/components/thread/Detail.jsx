@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
+import ThreadComment from './DetailComment';
+
 import { useDispatch, useSelector } from "react-redux";
 import { asyncGetDetailThread } from "../../states/threadDetail/action";
+import {
+  FaThumbsUp,
+  FaThumbsDown,
+  FaCommentAlt
+} from 'react-icons/fa'
 
 function ThreadDetail({ threadId }) {
   const { authUser, threadDetail, users } = useSelector((states) => states);
@@ -83,6 +90,10 @@ function ThreadDetail({ threadId }) {
             </div>
           )}
         </div>
+      </div>
+
+      <div className="my-1">
+        <ThreadComment threadId={threadDetail.id} comments={threadDetail.comments}/>
       </div>
     </>
   );
