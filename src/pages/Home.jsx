@@ -7,7 +7,6 @@ import ThreadList from '../components/thread/List'
 import { useSelector } from 'react-redux'
 
 function Home () {
-
   const {
     authUser
   } = useSelector((states) => states)

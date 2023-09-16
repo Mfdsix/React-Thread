@@ -1,32 +1,31 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
   VoteType,
-  asyncSetStatusVoteComment,
-} from "../../states/threadDetail/action";
-import { useDispatch, useSelector } from "react-redux";
+  asyncSetStatusVoteComment
+} from '../../states/threadDetail/action'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa'
 
-function DetailCommentItem({ comment }) {
-  const { authUser } = useSelector((states) => states);
-  const dispatch = useDispatch();
+function DetailCommentItem ({ comment }) {
+  const { authUser } = useSelector((states) => states)
+  const dispatch = useDispatch()
 
   const onVote = (type) => {
-
-    if(!authUser){
-      return window.alert("Login to vote");
+    if (!authUser) {
+      return window.alert('Login to vote')
     }
 
     dispatch(
       asyncSetStatusVoteComment({
         commentId: comment.id,
         threadId: comment.threadId,
-        type,
+        type
       })
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -70,11 +69,11 @@ function DetailCommentItem({ comment }) {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 DetailCommentItem.propTypes = {
-  comment: PropTypes.object.isRequired,
-};
+  comment: PropTypes.object.isRequired
+}
 
-export default DetailCommentItem;
+export default DetailCommentItem

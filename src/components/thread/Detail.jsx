@@ -1,27 +1,37 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-import ThreadComment from './DetailComment';
+import ThreadComment from './DetailComment'
 
-import { useDispatch, useSelector } from "react-redux";
-import { asyncGetDetailThread } from "../../states/threadDetail/action";
-import {
-  FaThumbsUp,
-  FaThumbsDown,
-  FaCommentAlt
-} from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncGetDetailThread } from '../../states/threadDetail/action'
+import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from 'react-icons/fa'
+import { VoteType, asyncSetStatusVoteThread } from '../../states/threads/action'
 
-function ThreadDetail({ threadId }) {
-  const { authUser, threadDetail, users } = useSelector((states) => states);
-  const dispatch = useDispatch();
+function ThreadDetail ({ threadId }) {
+  const { authUser, threadDetail, users } = useSelector((states) => states)
+  const dispatch = useDispatch()
 
   const owner = threadDetail
     ? users.find((user) => user.id == threadDetail.ownerId)
-    : null;
+    : null
+
+  const onVote = (type) => {
+    if (!authUser) {
+      return alert('Login to vote')
+    }
+
+    dispatch(
+      asyncSetStatusVoteThread({
+        threadId: threadDetail?.id,
+        type
+      })
+    )
+  }
 
   useEffect(() => {
-    dispatch(asyncGetDetailThread(threadId));
-  }, [dispatch]);
+    dispatch(asyncGetDetailThread(threadId))
+  }, [dispatch])
 
   if (!threadDetail) {
     return (
@@ -30,7 +40,7 @@ function ThreadDetail({ threadId }) {
           <h3>Thread Tidak Ditemukan</h3>
         </div>
       </>
-    );
+    )
   }
 
   return (
@@ -57,32 +67,27 @@ function ThreadDetail({ threadId }) {
         </div>
 
         <div className="thread__action">
-          {authUser && (
-            <>
-              <div className="thread__action__button">
-                <button onClick={(e) => onVote(VoteType.UPVOTE)}>
-                  {authUser && threadDetail.upVotesBy.includes(authUser.id) ? (
-                    <FaThumbsUp color="green" />
-                  ) : (
-                    <FaThumbsUp />
-                  )}
-                  {threadDetail.upVotesBy.length > 0 && (
-                    <span>{threadDetail.upVotesBy.length}</span>
-                  )}
-                </button>
-              </div>
-              <div className="thread__action__button">
-                <button onClick={(e) => onVote(VoteType.DOWNVOTE)}>
-                  {authUser &&
-                  threadDetail.downVotesBy.includes(authUser.id) ? (
-                    <FaThumbsDown color="red" />
-                  ) : (
-                    <FaThumbsDown />
-                  )}
-                </button>
-              </div>
-            </>
-          )}
+          <div className="thread__action__button">
+            <button onClick={(e) => onVote(VoteType.UPVOTE)}>
+              {authUser && threadDetail.upVotesBy.includes(authUser.id) ? (
+                <FaThumbsUp color="green" />
+              ) : (
+                <FaThumbsUp />
+              )}
+              {threadDetail.upVotesBy.length > 0 && (
+                <span>{threadDetail.upVotesBy.length}</span>
+              )}
+            </button>
+          </div>
+          <div className="thread__action__button">
+            <button onClick={(e) => onVote(VoteType.DOWNVOTE)}>
+              {authUser && threadDetail.downVotesBy.includes(authUser.id) ? (
+                <FaThumbsDown color="red" />
+              ) : (
+                <FaThumbsDown />
+              )}
+            </button>
+          </div>
 
           {threadDetail.totalComments > 0 && (
             <div className="thread__action__button">
@@ -93,14 +98,17 @@ function ThreadDetail({ threadId }) {
       </div>
 
       <div className="my-1">
-        <ThreadComment threadId={threadDetail.id} comments={threadDetail.comments}/>
+        <ThreadComment
+          threadId={threadDetail.id}
+          comments={threadDetail.comments}
+        />
       </div>
     </>
-  );
+  )
 }
 
 ThreadDetail.propTypes = {
-  threadId: PropTypes.number,
-};
+  threadId: PropTypes.number
+}
 
-export default ThreadDetail;
+export default ThreadDetail

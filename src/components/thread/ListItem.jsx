@@ -1,33 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from "react-icons/fa";
+import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from 'react-icons/fa'
 
 import {
   VoteType,
-  asyncSetStatusVoteThread,
-} from "../../states/threads/action";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+  asyncSetStatusVoteThread
+} from '../../states/threads/action'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-function ListItem({ thread }) {
-  const { authUser, users } = useSelector((states) => states);
-  const dispatch = useDispatch();
+function ListItem ({ thread }) {
+  const { authUser, users } = useSelector((states) => states)
+  const dispatch = useDispatch()
 
-  const owner = users.find((user) => user.id == thread.ownerId);
+  const owner = users.find((user) => user.id == thread.ownerId)
 
   const onVote = (type) => {
     if (!authUser) {
-      return alert("Login to vote");
+      return alert('Login to vote')
     }
 
     dispatch(
       asyncSetStatusVoteThread({
         threadId: thread.id,
-        type,
+        type
       })
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -83,11 +83,11 @@ function ListItem({ thread }) {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 ListItem.propTypes = {
-  thread: PropTypes.object,
-};
+  thread: PropTypes.object
+}
 
-export default ListItem;
+export default ListItem

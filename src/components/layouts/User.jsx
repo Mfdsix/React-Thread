@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
 function UserLayout ({ needAuth = true, children }) {
-  const {
-    authUser
-  } = useSelector((states) => states)
+  // const {
+  //   authUser
+  // } = useSelector((states) => states)
 
   // if (needAuth && !authUser) {
   //   alert('Anda harus login terlebih dahulu')

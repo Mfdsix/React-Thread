@@ -1,15 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { asyncAddComment } from "../../states/threadDetail/action";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 
-import ThreadCommentItem from "./DetailCommentItem";
-import CommentInput from "./CommentInput";
+import ThreadCommentItem from './DetailCommentItem'
+import CommentInput from './CommentInput'
 
-function DetailComment({ threadId, comments }) {
-  const { authUser } = useSelector((states) => states);
-  const dispatch = useDispatch();
+function DetailComment ({ threadId, comments }) {
+  const { authUser } = useSelector((states) => states)
 
   return (
     <>
@@ -31,12 +29,12 @@ function DetailComment({ threadId, comments }) {
         ))}
       </div>
     </>
-  );
+  )
 }
 
 DetailComment.propTypes = {
   threadId: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+}
 
-export default DetailComment;
+export default DetailComment

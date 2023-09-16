@@ -1,69 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
-import { useDispatch, useSelector } from "react-redux";
-import { asyncAddThread } from "../../states/threads/action";
-import { FaSpinner } from "react-icons/fa";
+import { useDispatch } from 'react-redux'
+import { asyncAddThread } from '../../states/threads/action'
+import { FaSpinner } from 'react-icons/fa'
 
-function ThreadInput() {
-  const { authUser } = useSelector((states) => states);
-  const dispatch = useDispatch();
+function ThreadInput () {
+  const dispatch = useDispatch()
 
-  const [title, setTitle] = useState("");
-  const [titleError, setTitleError] = useState("");
+  const [title, setTitle] = useState('')
+  const [titleError, setTitleError] = useState('')
 
-  const [category, setCategory] = useState("");
-  const [categoryError, setCategoryError] = useState("");
+  const [category, setCategory] = useState('')
+  const [categoryError, setCategoryError] = useState('')
 
-  const [content, setContent] = useState("");
-  const [contentError, setContentError] = useState("");
+  const [content, setContent] = useState('')
+  const [contentError, setContentError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false);
-  const [formDisabled, setFormDisabled] = useState(false);
+  const [formLoading, setFormLoading] = useState(false)
+  const [formDisabled, setFormDisabled] = useState(false)
 
   const categories = [
     'Fun', 'Sport', 'Movie', 'Others'
-  ];
+  ]
 
   const onTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+    setTitle(e.target.value)
+  }
 
   const onCategoryChange = (e) => {
-    setCategory(e.target.value);
-  };
+    setCategory(e.target.value)
+  }
 
   const onContentChange = (e) => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
 
   const onFormSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(
       asyncAddThread({
         title,
         body: content,
-        category,
+        category
       })
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     if (!title || !category || !content) {
-      if (!title) setTitleError("Title must be filled");
-      if (!category) setCategoryError("Category must be selected");
-      if (!content) setContentError("Content must be selected");
+      if (!title) setTitleError('Title must be filled')
+      if (!category) setCategoryError('Category must be selected')
+      if (!content) setContentError('Content must be selected')
 
-      setFormDisabled(true);
+      setFormDisabled(true)
     }
 
     return () => {
-      setTitleError("");
-      setCategoryError("");
-      setContentError("");
-      setFormDisabled(false);
-    };
-  }, [title, category, content]);
+      setTitleError('')
+      setCategoryError('')
+      setContentError('')
+      setFormDisabled(false)
+    }
+  }, [title, category, content])
 
   return (
     <>
@@ -130,7 +129,7 @@ function ThreadInput() {
         </form>
       </div>
     </>
-  );
+  )
 }
 
-export default ThreadInput;
+export default ThreadInput

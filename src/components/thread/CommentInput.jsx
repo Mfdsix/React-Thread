@@ -1,49 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from "react-redux";
-import { asyncAddComment } from "../../states/threadDetail/action";
-import { FaSpinner } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncAddComment } from '../../states/threadDetail/action'
+import { FaSpinner } from 'react-icons/fa'
 
-function CommentInput({
-    threadId
+function CommentInput ({
+  threadId
 }) {
-  const { authUser } = useSelector((states) => states);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [content, setContent] = useState("");
-  const [contentError, setContentError] = useState("");
+  const [content, setContent] = useState('')
+  const [contentError, setContentError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false);
-  const [formDisabled, setFormDisabled] = useState(false);
+  const [formLoading, setFormLoading] = useState(false)
+  const [formDisabled, setFormDisabled] = useState(false)
 
   const onContentChange = (e) => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
 
   const onFormSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(
       asyncAddComment({
         threadId,
         content
       })
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     if (!content) {
-      if (!content) setContentError("Content must be filled");
+      if (!content) setContentError('Content must be filled')
 
-      setFormDisabled(true);
+      setFormDisabled(true)
     }
 
     return () => {
-      setContentError("");
-      setFormDisabled(false);
-    };
-  }, [content]);
+      setContentError('')
+      setFormDisabled(false)
+    }
+  }, [content])
 
   return (
     <>
@@ -80,11 +79,11 @@ function CommentInput({
         </form>
       </div>
     </>
-  );
+  )
 }
 
 CommentInput.propTypes = {
-    threadId: PropTypes.string
+  threadId: PropTypes.string
 }
 
-export default CommentInput;
+export default CommentInput

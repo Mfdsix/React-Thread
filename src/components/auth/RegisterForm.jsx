@@ -41,7 +41,7 @@ function RegisterForm () {
       password
     }))
 
-    navigate("/")
+    navigate('/')
   }
 
   useEffect(() => {

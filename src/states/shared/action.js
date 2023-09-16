@@ -14,8 +14,8 @@ function asyncPopulateUsersAndThreads () {
       const { error: userError, data: userData } = await AuthRequest.getAllUser()
       const { error: threadError, data: threadData } = await ThreadRequest.getAll()
 
-      if(!userError) dispatch(receiveUsersActionCreator(userData.users))
-      if(!threadError) dispatch(reveiceThreadsActionCreator(threadData.threads))
+      if (!userError) dispatch(receiveUsersActionCreator(userData.users))
+      if (!threadError) dispatch(reveiceThreadsActionCreator(threadData.threads))
     } catch (error) {
       alert(error.message)
     }
