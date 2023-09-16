@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 import { asyncAddThread } from '../../states/threads/action'
-import { FaSpinner } from 'react-icons/fa'
 
 function ThreadInput () {
   const dispatch = useDispatch()
@@ -16,7 +15,6 @@ function ThreadInput () {
   const [content, setContent] = useState('')
   const [contentError, setContentError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const categories = [
@@ -121,9 +119,9 @@ function ThreadInput () {
           </div>
           <div className="form__action flex__end">
             <button
-            disabled={formDisabled || formLoading}
+            disabled={formDisabled}
             type="submit" className="btn btn__submit">
-              {formLoading ? <FaSpinner /> : 'Post'}
+            Post
             </button>
           </div>
         </form>

@@ -9,6 +9,7 @@ import {
 } from '../../states/threads/action'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { convertDate } from '../../utils/date'
 
 function ListItem ({ thread }) {
   const { authUser, users } = useSelector((states) => states)
@@ -35,7 +36,10 @@ function ListItem ({ thread }) {
         {owner && (
           <div className="thread__user">
             <img src={owner.avatar} alt={owner.name} />
+            <div>
             <h4 className="thread__user__name">{owner.name}</h4>
+            <span className='thread__date'>{ convertDate(thread.createdAt) }</span>
+            </div>
           </div>
         )}
 

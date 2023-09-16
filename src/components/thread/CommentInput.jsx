@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 import PropTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { asyncAddComment } from '../../states/threadDetail/action'
-import { FaSpinner } from 'react-icons/fa'
 
 function CommentInput ({
   threadId
@@ -13,7 +12,6 @@ function CommentInput ({
   const [content, setContent] = useState('')
   const [contentError, setContentError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onContentChange = (e) => {
@@ -71,9 +69,9 @@ function CommentInput ({
           </div>
           <div className="form__action flex__end">
             <button
-            disabled={formDisabled || formLoading}
+            disabled={formDisabled}
             type="submit" className="btn btn__submit">
-              {formLoading ? <FaSpinner /> : 'Comment'}
+              Comment
             </button>
           </div>
         </form>

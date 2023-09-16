@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { asyncGetDetailThread } from '../../states/threadDetail/action'
 import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from 'react-icons/fa'
 import { VoteType, asyncSetStatusVoteThread } from '../../states/threads/action'
+import { convertDate } from '../../utils/date'
 
 function ThreadDetail ({ threadId }) {
-  const { authUser, threadDetail, users } = useSelector((states) => states)
+  const { authUser, threadDetail } = useSelector((states) => states)
   const dispatch = useDispatch()
-
-  const owner = threadDetail
-    ? users.find((user) => user.id == threadDetail.ownerId)
-    : null
 
   const onVote = (type) => {
     if (!authUser) {
@@ -46,10 +43,13 @@ function ThreadDetail ({ threadId }) {
   return (
     <>
       <div className="thread__item thread__detail my-1">
-        {owner && (
+        {threadDetail.owner && (
           <div className="thread__user">
-            <img src={owner.avatar} alt={owner.name} />
-            <h4 className="thread__user__name">{owner.name}</h4>
+            <img src={threadDetail.owner.avatar} alt={threadDetail.owner.name} />
+            <div>
+            <h4 className="thread__user__name">{threadDetail.owner.name}</h4>
+            <span className='thread__date'>{ convertDate(threadDetail.createdAt) }</span>
+            </div>
           </div>
         )}
 

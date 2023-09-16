@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FaSpinner } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -16,7 +15,6 @@ function LoginForm () {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onEmailChange = (e) => {
@@ -90,11 +88,11 @@ function LoginForm () {
                       Register
                     </Link>
                     <button
-                      disabled={formDisabled || formLoading}
+                      disabled={formDisabled}
                       type="submit"
                       className="btn btn__submit"
                     >
-                      {formLoading ? <FaSpinner /> : 'Login'}
+                      Login
                     </button>
                   </div>
                 </form>

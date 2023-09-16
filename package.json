@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint ./src",
+    "lint": "eslint --ext .jsx,.js ./src",
     "lint:fix": "eslint --fix --ext .jsx,.js ./src"
   },
   "dependencies": {

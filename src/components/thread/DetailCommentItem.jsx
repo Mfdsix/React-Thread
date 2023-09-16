@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa'
+import { convertDate } from '../../utils/date'
 
 function DetailCommentItem ({ comment }) {
   const { authUser } = useSelector((states) => states)
@@ -33,7 +34,10 @@ function DetailCommentItem ({ comment }) {
         {comment.owner && (
           <div className="thread__user">
             <img src={comment.owner.avatar} alt={comment.owner.name} />
+            <div>
             <h4 className="thread__user__name">{comment.owner.name}</h4>
+            <span className='thread__date'>{ convertDate(comment.createdAt) }</span>
+            </div>
           </div>
         )}
 

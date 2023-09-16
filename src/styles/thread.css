@@ -15,10 +15,11 @@
     height: 50px;
     object-fit: cover;
     border-radius: 100%;
+    margin-right: 10px;
 }
 
-.thread__user .thread__user__name{
-    margin-left: 10px;
+.thread__date{
+    font-size: 12px;
 }
 
 .thread__content .thread__content__title{
