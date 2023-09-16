@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   asyncSetIsPreload
 } from './states/isPreload/action'
+import LoadingBar from './components/LoadingBar'
 
 function App () {
   const {
@@ -16,7 +17,10 @@ function App () {
     dispatch(asyncSetIsPreload())
   }, [dispatch])
 
-  return isPreload ? null : <Router/>
+  return isPreload ? null : <>
+  <LoadingBar/>
+  <Router/>
+  </>
 }
 
 export default App

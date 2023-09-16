@@ -2,6 +2,7 @@ import {
   AuthRequest
 } from '../../data/api/dicoding-forum'
 import { setAccessToken } from '../../data/api/http'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const ActionType = {
   SET_AUTH_USER: 'SET_AUTH_USER',
@@ -29,6 +30,8 @@ function unsetAuthUserActionCreator () {
 function asyncSetAuthUser ({ email, password }) {
   return async (dispatch) => {
     try {
+      dispatch(showLoading())
+
       const { error: loginError, message: loginMessage, data: loginData } = await AuthRequest.login({
         email,
         password
@@ -47,6 +50,8 @@ function asyncSetAuthUser ({ email, password }) {
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
       alert(error.message)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }

@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar'
 import { CommentRequest, ThreadRequest, VoteRequest } from '../../data/api/dicoding-forum'
 
 const ActionType = {
@@ -51,11 +52,14 @@ function setStatusVoteCommentActionCreator ({
 function asyncGetDetailThread (threadId) {
   return async (dispatch) => {
     try {
+      dispatch(showLoading())
       const { error, data } = await ThreadRequest.getById(threadId)
 
       if (!error) dispatch(reveiceThreadDetailActionCreator(data.detailThread))
     } catch (error) {
       alert(error.message)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
@@ -66,6 +70,7 @@ function asyncAddComment ({
 }) {
   return async (dispatch) => {
     try {
+      dispatch(showLoading())
       const { error, message, data } = await CommentRequest.create(threadId, {
         content
       })
@@ -75,6 +80,8 @@ function asyncAddComment ({
       dispatch(addCommentActionCreator(data.comment))
     } catch (error) {
       alert(error.message)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }

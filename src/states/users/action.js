@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar'
 import { AuthRequest } from '../../data/api/dicoding-forum'
 
 const ActionType = {
@@ -16,6 +17,7 @@ function receiveUsersActionCreator (users) {
 function asyncRegisterUser ({ name, email, password }) {
   return async () => {
     try {
+      dispatch(showLoading())
       const { error, message } = await AuthRequest.register({
         name,
         email,
@@ -25,6 +27,8 @@ function asyncRegisterUser ({ name, email, password }) {
       if (error) return alert(message)
     } catch (error) {
       alert(error.message)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }

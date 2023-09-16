@@ -1,6 +1,7 @@
 import {
   ThreadRequest, VoteRequest
 } from '../../data/api/dicoding-forum'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
@@ -55,6 +56,7 @@ function asyncAddThread ({
 }) {
   return async (dispatch) => {
     try {
+      dispatch(showLoading())
       const { error, message, data } = await ThreadRequest.create({
         title, body, category
       })
@@ -64,6 +66,8 @@ function asyncAddThread ({
       dispatch(addThreadActionCreator(data.thread))
     } catch (error) {
       alert(error.message)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
