@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import {
-  asyncRegisterUser
-} from '../../states/users/action'
+import { asyncRegisterUser } from '../../states/users/action'
 import { useDispatch } from 'react-redux'
+import {
+  FaSpinner
+} from 'react-icons/fa'
 
 function RegisterForm () {
   const dispatch = useDispatch()
@@ -18,6 +19,7 @@ function RegisterForm () {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
+  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onNameChange = (e) => {
@@ -33,13 +35,19 @@ function RegisterForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    dispatch(asyncRegisterUser({
-      name,
-      email,
-      password
-    }))
+    setFormLoading(true)
+    const isRegistered = await dispatch(
+      asyncRegisterUser({
+        name,
+        email,
+        password
+      })
+    )
+    setFormLoading(false)
 
-    navigate('/')
+    if (isRegistered) {
+      navigate('/')
+    }
   }
 
   useEffect(() => {
@@ -109,11 +117,11 @@ function RegisterForm () {
               Login
             </Link>
             <button
-              disabled={formDisabled}
+              disabled={formDisabled || formLoading}
               type="submit"
               className="btn btn__submit"
             >
-              Register
+              { formLoading ? <FaSpinner/> : 'Register' }
             </button>
           </div>
         </form>

@@ -37,19 +37,26 @@ function asyncSetAuthUser ({ email, password }) {
         password
       })
 
-      if (loginError) return alert(loginMessage)
+      if (loginError) {
+        alert(loginMessage)
+        return false
+      }
       setAccessToken(loginData.token)
 
       const { error: profileError, message: profileMessage, data: profileData } = await AuthRequest.profile()
+
       if (profileError) {
         dispatch(unsetAuthUserActionCreator())
-        return alert(profileMessage)
+        alert(profileMessage)
+        return false
       };
 
       dispatch(setAuthUserActionCreator(profileData))
+      return true
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
       alert(error.message)
+      return false
     } finally {
       dispatch(hideLoading())
     }

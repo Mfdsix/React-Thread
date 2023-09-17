@@ -61,11 +61,16 @@ function asyncAddThread ({
         title, body, category
       })
 
-      if (error) return alert(message)
+      if (error) {
+        alert(message)
+        return false
+      }
 
       dispatch(addThreadActionCreator(data.thread))
+      return true
     } catch (error) {
       alert(error.message)
+      return false
     } finally {
       dispatch(hideLoading())
     }

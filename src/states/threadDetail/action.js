@@ -1,5 +1,9 @@
 import { hideLoading, showLoading } from 'react-redux-loading-bar'
-import { CommentRequest, ThreadRequest, VoteRequest } from '../../data/api/dicoding-forum'
+import {
+  CommentRequest,
+  ThreadRequest,
+  VoteRequest
+} from '../../data/api/dicoding-forum'
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
@@ -55,19 +59,20 @@ function asyncGetDetailThread (threadId) {
       dispatch(showLoading())
       const { error, data } = await ThreadRequest.getById(threadId)
 
-      if (!error) dispatch(reveiceThreadDetailActionCreator(data.detailThread))
+      if (error) return false
+
+      dispatch(reveiceThreadDetailActionCreator(data.detailThread))
+      return true
     } catch (error) {
       alert(error.message)
+      return false
     } finally {
       dispatch(hideLoading())
     }
   }
 }
 
-function asyncAddComment ({
-  threadId,
-  content
-}) {
+function asyncAddComment ({ threadId, content }) {
   return async (dispatch) => {
     try {
       dispatch(showLoading())
@@ -93,12 +98,14 @@ function asyncSetStatusVoteComment ({
 }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
-    dispatch(setStatusVoteCommentActionCreator({
-      threadId,
-      commentId,
-      userId: authUser?.id,
-      type
-    }))
+    dispatch(
+      setStatusVoteCommentActionCreator({
+        threadId,
+        commentId,
+        userId: authUser?.id,
+        type
+      })
+    )
 
     try {
       switch (type) {
@@ -115,13 +122,15 @@ function asyncSetStatusVoteComment ({
       alert(error.message)
 
       // rollback function
-      dispatch(setStatusVoteCommentActionCreator({
-        threadId,
-        commentId,
-        userId: authUser?.id,
-        type,
-        isRollback: true
-      }))
+      dispatch(
+        setStatusVoteCommentActionCreator({
+          threadId,
+          commentId,
+          userId: authUser?.id,
+          type,
+          isRollback: true
+        })
+      )
     }
   }
 }

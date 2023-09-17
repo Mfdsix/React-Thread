@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  asyncSetAuthUser
-} from '../../states/authUser/action'
+import { asyncSetAuthUser } from '../../states/authUser/action'
+import { FaSpinner } from 'react-icons/fa'
 
 function LoginForm () {
   const dispatch = useDispatch()
@@ -15,6 +14,7 @@ function LoginForm () {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
+  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onEmailChange = (e) => {
@@ -27,11 +27,18 @@ function LoginForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    dispatch(asyncSetAuthUser({
-      email, password
-    }))
+    setFormLoading(true)
+    const isLoggedIn = await dispatch(
+      asyncSetAuthUser({
+        email,
+        password
+      })
+    )
+    setFormLoading(false)
 
-    navigate('/')
+    if (isLoggedIn) {
+      navigate('/')
+    }
   }
 
   useEffect(() => {
@@ -50,54 +57,52 @@ function LoginForm () {
   }, [email, password])
 
   return (
-            <>
-              <div className="auth__body">
-                <form onSubmit={onFormSubmit}>
-                  <div className="form__group form__limit__char">
-                    <input
-                      value={email}
-                      onChange={onEmailChange}
-                      type="email"
-                      placeholder="Email"
-                      className="form__input"
-                    />
-                    {emailError && (
-                      <span className="form__invalid__feedback">
-                        *( {emailError}
-                      </span>
-                    )}
-                  </div>
+    <>
+      <div className="auth__body">
+        <form onSubmit={onFormSubmit}>
+          <div className="form__group form__limit__char">
+            <input
+              value={email}
+              onChange={onEmailChange}
+              type="email"
+              placeholder="Email"
+              className="form__input"
+            />
+            {emailError && (
+              <span className="form__invalid__feedback">*( {emailError}</span>
+            )}
+          </div>
 
-                  <div className="form__group form__limit__char">
-                    <input
-                      value={password}
-                      onChange={onPasswordChange}
-                      type="password"
-                      placeholder="Password"
-                      className="form__input"
-                    />
-                    {passwordError && (
-                      <span className="form__invalid__feedback">
-                        *( {passwordError}
-                      </span>
-                    )}
-                  </div>
+          <div className="form__group form__limit__char">
+            <input
+              value={password}
+              onChange={onPasswordChange}
+              type="password"
+              placeholder="Password"
+              className="form__input"
+            />
+            {passwordError && (
+              <span className="form__invalid__feedback">
+                *( {passwordError}
+              </span>
+            )}
+          </div>
 
-                  <div className="form__action flex__end">
-                    <Link className="btn btn__transparent" to="/register">
-                      Register
-                    </Link>
-                    <button
-                      disabled={formDisabled}
-                      type="submit"
-                      className="btn btn__submit"
-                    >
-                      Login
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </>
+          <div className="form__action flex__end">
+            <Link className="btn btn__transparent" to="/register">
+              Register
+            </Link>
+            <button
+              disabled={formDisabled || formLoading}
+              type="submit"
+              className="btn btn__submit"
+            >
+              {formLoading ? <FaSpinner /> : 'Login'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   )
 }
 

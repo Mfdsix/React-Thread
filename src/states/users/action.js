@@ -15,7 +15,7 @@ function receiveUsersActionCreator (users) {
 }
 
 function asyncRegisterUser ({ name, email, password }) {
-  return async () => {
+  return async (dispatch) => {
     try {
       dispatch(showLoading())
       const { error, message } = await AuthRequest.register({
@@ -24,9 +24,15 @@ function asyncRegisterUser ({ name, email, password }) {
         password
       })
 
-      if (error) return alert(message)
+      if (error) {
+        alert(message)
+        return false
+      }
+
+      return true
     } catch (error) {
       alert(error.message)
+      return false
     } finally {
       dispatch(hideLoading())
     }
