@@ -71,13 +71,13 @@ function asyncAddThread ({ title, body, category }) {
   }
 }
 
-function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE }) {
+function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
     dispatch(
       setStatusVoteThreadActionCreator({
         threadId,
-        userId: authUser?.id,
+        userId: userId || authUser?.id,
         type
       })
     )

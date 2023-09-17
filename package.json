@@ -8,7 +8,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .jsx,.js ./src",
-    "lint:fix": "eslint --fix --ext .jsx,.js ./src"
+    "lint:fix": "eslint --fix --ext .jsx,.js ./src",
+    "test": "vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -28,6 +29,7 @@
     "eslint-plugin-n": "^16.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "vitest": "^0.34.4"
   }
 }
