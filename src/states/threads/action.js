@@ -4,7 +4,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
   ADD_THREAD: 'ADD_THREAD',
-  SET_STATUS_VOTE_THREAD: 'SET_STATUS_VOTE_THREAD'
+  SET_STATUS_VOTE_THREAD_ITEM: 'SET_STATUS_VOTE_THREAD_ITEM'
 }
 const VoteType = {
   UPVOTE: 'UPVOTE',
@@ -36,7 +36,7 @@ function setStatusVoteThreadActionCreator ({
   type
 }) {
   return {
-    type: ActionType.SET_STATUS_VOTE_THREAD,
+    type: ActionType.SET_STATUS_VOTE_THREAD_ITEM,
     payload: {
       threadId,
       userId,

@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-function ListItem({ leaderboard }) {
+function ListItem ({ leaderboard }) {
   return (
     <>
       <div className="leaderboard__item my-1">
@@ -16,11 +16,11 @@ function ListItem({ leaderboard }) {
         <div className="leaderboard_score">{ leaderboard.score }</div>
       </div>
     </>
-  );
+  )
 }
 
 ListItem.propTypes = {
-  leaderboard: PropTypes.object,
-};
+  leaderboard: PropTypes.object
+}
 
-export default ListItem;
+export default ListItem

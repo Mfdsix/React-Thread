@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-    asyncReceiveLeaderboards
+  asyncReceiveLeaderboards
 } from '../../states/leaderboards/action'
-import ListItem from "./ListItem";
+import ListItem from './ListItem'
 
-function List() {
+function List () {
+  const {
+    leaderboards
+  } = useSelector((states) => states)
+  const dispatch = useDispatch()
 
-    const {
-        leaderboards
-    } = useSelector((states) => states)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(asyncReceiveLeaderboards())
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(asyncReceiveLeaderboards())
+  }, [dispatch])
 
   return (
     <>
@@ -27,7 +26,7 @@ function List() {
         <ListItem key={leaderboard.user.id} leaderboard={leaderboard}/>
       )) }
     </>
-  );
+  )
 }
 
-export default List;
+export default List
