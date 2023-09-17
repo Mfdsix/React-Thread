@@ -80,7 +80,7 @@ function asyncGetDetailThread (threadId) {
       dispatch(reveiceThreadDetailActionCreator(data.detailThread))
       return true
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -91,6 +91,7 @@ function asyncGetDetailThread (threadId) {
 function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
+    dispatch(showLoading())
     dispatch(
       setStatusVoteThreadActionCreator({
         threadId,
@@ -104,7 +105,7 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
       else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
       else await VoteRequest.neutralVote(threadId)
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
 
       // rollback function
       dispatch(
@@ -114,6 +115,8 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
           type
         })
       )
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
@@ -134,7 +137,7 @@ function asyncAddComment ({ threadId, content }) {
       dispatch(addCommentActionCreator(data.comment))
       return true
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -149,6 +152,8 @@ function asyncSetStatusVoteComment ({
 }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
+
+    dispatch(showLoading())
     dispatch(
       setStatusVoteCommentActionCreator({
         threadId,
@@ -171,7 +176,7 @@ function asyncSetStatusVoteComment ({
         })
       } else await VoteRequest.commentNeutralVote(threadId)
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
 
       // rollback function
       dispatch(
@@ -183,6 +188,8 @@ function asyncSetStatusVoteComment ({
           isRollback: true
         })
       )
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }

@@ -25,13 +25,13 @@ function asyncRegisterUser ({ name, email, password }) {
       })
 
       if (error) {
-        window.alert(message)
+        if (this == this.window) window.alert(message)
         return false
       }
 
       return true
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())

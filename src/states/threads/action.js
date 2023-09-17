@@ -56,14 +56,14 @@ function asyncAddThread ({ title, body, category }) {
       })
 
       if (error) {
-        window.alert(message)
+        if (this == this.window) window.alert(message)
         return false
       }
 
       dispatch(addThreadActionCreator(data.thread))
       return true
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -74,6 +74,8 @@ function asyncAddThread ({ title, body, category }) {
 function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
+
+    dispatch(showLoading())
     dispatch(
       setStatusVoteThreadActionCreator({
         threadId,
@@ -87,7 +89,7 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
       else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
       else await VoteRequest.neutralVote(threadId)
     } catch (error) {
-      window.alert(error.message)
+      if (this == this.window) window.alert(error.message)
 
       // rollback function
       dispatch(
@@ -97,6 +99,8 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
           type
         })
       )
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
