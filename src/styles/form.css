@@ -31,6 +31,9 @@
 .btn.btn__cancel{
     background-color: red;
 }
+.btn.btn__block{
+    display: inline-block;
+}
 .btn.btn__submit{
     background-color: var(--primary-color);
     color: var(--body-bg-color);

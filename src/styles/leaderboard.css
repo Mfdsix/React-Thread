@@ -1,0 +1,26 @@
+.leaderboard__item{
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leaderboard__user{
+    display: flex;
+    align-items: center;
+}
+
+.leaderboard__user img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.leaderboard_score{
+    font-size: 24px;
+    font-weight: bold;
+}

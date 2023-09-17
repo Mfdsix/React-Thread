@@ -6,6 +6,7 @@ import Register from './pages/auth/Register'
 
 import Home from './pages/Home'
 import ThreadDetail from './pages/thread/Detail'
+import Leaderboard from './pages/Leaderboard'
 import PageNotFound from './pages/PageNotFound'
 
 function Router () {
@@ -16,6 +17,8 @@ function Router () {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
         <Route path="/:threadId" element={<ThreadDetail />} />
 

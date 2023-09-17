@@ -4,6 +4,7 @@ import UserLayout from '../components/layouts/User'
 
 import ThreadInput from '../components/thread/Input'
 import ThreadList from '../components/thread/List'
+import LeaderboardLink from '../components/thread/LeaderboardLink'
 import { useSelector } from 'react-redux'
 
 function Home () {
@@ -21,6 +22,10 @@ function Home () {
             </div>
           </>
          )}
+
+        <div className='my-1'></div>
+
+        <LeaderboardLink/>
 
         <div className='my-1'></div>
 

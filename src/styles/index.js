@@ -6,3 +6,4 @@ import './error.css'
 import './auth.css'
 
 import './thread.css'
+import './leaderboard.css'

@@ -1,5 +1,4 @@
 import { LeaderBoardRequest } from '../../data/api/dicoding-forum'
-import { reveiceThreadDetailActionCreator } from '../threadDetail/action'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const ActionType = {
@@ -23,7 +22,7 @@ function asyncReceiveLeaderboards () {
 
       if (error) return alert(message)
 
-      dispatch(reveiceThreadDetailActionCreator(data.leaderboards))
+      dispatch(receiveLeaderboardsActionCreator(data.leaderboards))
     } catch (error) {
       alert(error.message)
     } finally {
