@@ -1,16 +1,11 @@
-import {
-  ActionType, VoteType
-} from './action'
+import { ActionType, VoteType } from './action'
 
 function threadsReducer (threads = [], action = {}) {
   switch (action.type) {
     case ActionType.RECEIVE_THREADS:
       return action.payload.threads
     case ActionType.ADD_THREAD:
-      return [
-        action.payload.thread,
-        ...threads
-      ]
+      return [action.payload.thread, ...threads]
     case ActionType.SET_STATUS_VOTE_THREAD:
       return threads.map((thread) => {
         if (thread.id == action.payload.threadId) {
@@ -18,17 +13,27 @@ function threadsReducer (threads = [], action = {}) {
           let downVotesBy = thread.downVotesBy
 
           if (action.payload.type == VoteType.UPVOTE) {
-            if (action.payload.isRollback) {
-              upVotesBy = upVotesBy.filter((userId) => userId != action.payload.userId)
+            if (upVotesBy.includes(action.payload.userId)) {
+              upVotesBy = upVotesBy.filter(
+                (userId) => userId != action.payload.userId
+              )
             } else {
-              upVotesBy.push(action.payload.userId)
+              upVotesBy = [
+                action.payload.userId,
+                ...upVotesBy
+              ]
+              downVotesBy = downVotesBy.filter((userId) => userId != action.payload.userId)
             }
           }
           if (action.payload.type == VoteType.DOWNVOTE) {
-            if (action.payload.isRollback) {
+            if (downVotesBy.includes(action.payload.userId)) {
               downVotesBy = downVotesBy.filter((userId) => userId != action.payload.userId)
             } else {
-              downVotesBy.push(action.payload.userId)
+              downVotesBy = [
+                action.payload.userId,
+                ...downVotesBy
+              ]
+              upVotesBy = upVotesBy.filter((userId) => userId != action.payload.userId)
             }
           }
 

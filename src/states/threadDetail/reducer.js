@@ -1,6 +1,4 @@
-import {
-  ActionType, VoteType
-} from './action'
+import { ActionType, VoteType } from './action'
 
 function threadDetailReducer (thread = null, action = {}) {
   switch (action.type) {
@@ -18,26 +16,70 @@ function threadDetailReducer (thread = null, action = {}) {
           ...thread.comments
         ]
       }
+    case ActionType.SET_STATUS_VOTE_THREAD:
+      let upVotesBy = thread.upVotesBy
+      let downVotesBy = thread.downVotesBy
+
+      if (action.payload.type == VoteType.UPVOTE) {
+        if (upVotesBy.includes(action.payload.userId)) {
+          upVotesBy = upVotesBy.filter(
+            (userId) => userId != action.payload.userId
+          )
+        } else {
+          upVotesBy = [action.payload.userId, ...upVotesBy]
+          downVotesBy = downVotesBy.filter(
+            (userId) => userId != action.payload.userId
+          )
+        }
+      }
+      if (action.payload.type == VoteType.DOWNVOTE) {
+        if (downVotesBy.includes(action.payload.userId)) {
+          downVotesBy = downVotesBy.filter(
+            (userId) => userId != action.payload.userId
+          )
+        } else {
+          downVotesBy = [action.payload.userId, ...downVotesBy]
+          upVotesBy = upVotesBy.filter(
+            (userId) => userId != action.payload.userId
+          )
+        }
+      }
+
+      return {
+        ...thread,
+        upVotesBy,
+        downVotesBy
+      }
     case ActionType.SET_STATUS_VOTE_COMMENT:
       return {
         ...thread,
         comments: thread.comments.map((comment) => {
-          if (comment.id == action.payload.comment) {
-            let upVotesBy = thread.upVotesBy
-            let downVotesBy = thread.downVotesBy
+          if (comment.id == action.payload.commentId) {
+            let upVotesBy = comment.upVotesBy
+            let downVotesBy = comment.downVotesBy
 
             if (action.payload.type == VoteType.UPVOTE) {
-              if (action.payload.isRollback) {
-                upVotesBy = upVotesBy.filter((userId) => userId != action.payload.userId)
+              if (upVotesBy.includes(action.payload.userId)) {
+                upVotesBy = upVotesBy.filter(
+                  (userId) => userId != action.payload.userId
+                )
               } else {
-                upVotesBy.push(action.payload.userId)
+                upVotesBy = [action.payload.userId, ...upVotesBy]
+                downVotesBy = downVotesBy.filter(
+                  (userId) => userId != action.payload.userId
+                )
               }
             }
             if (action.payload.type == VoteType.DOWNVOTE) {
-              if (action.payload.isRollback) {
-                downVotesBy = downVotesBy.filter((userId) => userId != action.payload.userId)
+              if (downVotesBy.includes(action.payload.userId)) {
+                downVotesBy = downVotesBy.filter(
+                  (userId) => userId != action.payload.userId
+                )
               } else {
-                downVotesBy.push(action.payload.userId)
+                downVotesBy = [action.payload.userId, ...downVotesBy]
+                upVotesBy = upVotesBy.filter(
+                  (userId) => userId != action.payload.userId
+                )
               }
             }
 

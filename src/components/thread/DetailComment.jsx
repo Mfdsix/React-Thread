@@ -25,7 +25,7 @@ function DetailComment ({ threadId, comments }) {
         )}
 
         {comments.map((comment) => (
-          <ThreadCommentItem key={comment.id} comment={comment} />
+          <ThreadCommentItem key={comment.id} comment={comment} threadId={threadId} />
         ))}
       </div>
     </>

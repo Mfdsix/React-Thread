@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import ThreadComment from './DetailComment'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { asyncGetDetailThread } from '../../states/threadDetail/action'
 import { FaThumbsUp, FaThumbsDown, FaCommentAlt } from 'react-icons/fa'
-import { VoteType, asyncSetStatusVoteThread } from '../../states/threads/action'
+import { asyncGetDetailThread, VoteType, asyncSetStatusVoteThread } from '../../states/threadDetail/action'
 import { convertDate } from '../../utils/date'
 
 function ThreadDetail ({ threadId }) {
@@ -108,7 +107,7 @@ function ThreadDetail ({ threadId }) {
 }
 
 ThreadDetail.propTypes = {
-  threadId: PropTypes.number
+  threadId: PropTypes.string
 }
 
 export default ThreadDetail

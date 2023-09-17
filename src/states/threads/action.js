@@ -1,6 +1,4 @@
-import {
-  ThreadRequest, VoteRequest
-} from '../../data/api/dicoding-forum'
+import { ThreadRequest, VoteRequest } from '../../data/api/dicoding-forum'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const ActionType = {
@@ -35,30 +33,26 @@ function addThreadActionCreator (thread) {
 function setStatusVoteThreadActionCreator ({
   threadId,
   userId,
-  type,
-  isRollback = false
+  type
 }) {
   return {
     type: ActionType.SET_STATUS_VOTE_THREAD,
     payload: {
       threadId,
       userId,
-      type,
-      isRollback
+      type
     }
   }
 }
 
-function asyncAddThread ({
-  title,
-  body,
-  category
-}) {
+function asyncAddThread ({ title, body, category }) {
   return async (dispatch) => {
     try {
       dispatch(showLoading())
       const { error, message, data } = await ThreadRequest.create({
-        title, body, category
+        title,
+        body,
+        category
       })
 
       if (error) {
@@ -77,39 +71,32 @@ function asyncAddThread ({
   }
 }
 
-function asyncSetStatusVoteThread ({
-  threadId,
-  type = VoteType.UPVOTE
-}) {
+function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE }) {
   return async (dispatch, getState) => {
     const { authUser } = getState()
-    dispatch(setStatusVoteThreadActionCreator({
-      threadId,
-      userId: authUser?.id,
-      type
-    }))
+    dispatch(
+      setStatusVoteThreadActionCreator({
+        threadId,
+        userId: authUser?.id,
+        type
+      })
+    )
 
     try {
-      switch (type) {
-        case VoteType.UPVOTE:
-          await VoteRequest.upVote(threadId)
-          break
-        case VoteType.DOWNVOTE:
-          await VoteRequest.downVote(threadId)
-          break
-        default:
-          await VoteRequest.neutralVote(threadId)
-      }
+      if (type == VoteType.UPVOTE) await VoteRequest.upVote(threadId)
+      else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
+      else await VoteRequest.neutralVote(threadId)
     } catch (error) {
       alert(error.message)
 
       // rollback function
-      dispatch(setStatusVoteThreadActionCreator({
-        threadId,
-        userId: authUser?.id,
-        type,
-        isRollback: true
-      }))
+      dispatch(
+        setStatusVoteThreadActionCreator({
+          threadId,
+          userId: authUser?.id,
+          type
+        })
+      )
     }
   }
 }

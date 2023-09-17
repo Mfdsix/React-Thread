@@ -65,7 +65,7 @@ function CommentInput ({
             <div className="form__group form__limit__char">
               <textarea
                 onChange={onContentChange}
-                defaultValue={content}
+                value={content}
                 className="form__input"
                 cols="30"
                 rows="10"

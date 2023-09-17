@@ -7,6 +7,7 @@ import {
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
+  SET_STATUS_VOTE_THREAD: 'SET_STATUS_VOTE_THREAD',
   ADD_COMMENT: 'ADD_COMMENT',
   SET_STATUS_VOTE_COMMENT: 'SET_STATUS_VOTE_COMMENT'
 }
@@ -21,6 +22,21 @@ function reveiceThreadDetailActionCreator (thread = null) {
     type: ActionType.RECEIVE_THREAD_DETAIL,
     payload: {
       thread
+    }
+  }
+}
+
+function setStatusVoteThreadActionCreator ({
+  threadId,
+  userId,
+  type
+}) {
+  return {
+    type: ActionType.SET_STATUS_VOTE_THREAD,
+    payload: {
+      threadId,
+      userId,
+      type
     }
   }
 }
@@ -72,6 +88,36 @@ function asyncGetDetailThread (threadId) {
   }
 }
 
+function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE }) {
+  return async (dispatch, getState) => {
+    const { authUser } = getState()
+    dispatch(
+      setStatusVoteThreadActionCreator({
+        threadId,
+        userId: authUser?.id,
+        type
+      })
+    )
+
+    try {
+      if (type == VoteType.UPVOTE) await VoteRequest.upVote(threadId)
+      else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
+      else await VoteRequest.neutralVote(threadId)
+    } catch (error) {
+      alert(error.message)
+
+      // rollback function
+      dispatch(
+        setStatusVoteThreadActionCreator({
+          threadId,
+          userId: authUser?.id,
+          type
+        })
+      )
+    }
+  }
+}
+
 function asyncAddComment ({ threadId, content }) {
   return async (dispatch) => {
     try {
@@ -80,11 +126,16 @@ function asyncAddComment ({ threadId, content }) {
         content
       })
 
-      if (error) return alert(message)
+      if (error) {
+        alert(message)
+        return false
+      }
 
       dispatch(addCommentActionCreator(data.comment))
+      return true
     } catch (error) {
       alert(error.message)
+      return false
     } finally {
       dispatch(hideLoading())
     }
@@ -108,16 +159,17 @@ function asyncSetStatusVoteComment ({
     )
 
     try {
-      switch (type) {
-        case VoteType.UPVOTE:
-          await VoteRequest.commentUpVote(threadId)
-          break
-        case VoteType.DOWNVOTE:
-          await VoteRequest.commentDownVote(threadId)
-          break
-        default:
-          await VoteRequest.commentNeutralVote(threadId)
-      }
+      if (type == VoteType.UPVOTE) {
+        await VoteRequest.commentUpVote({
+          threadId,
+          commentId
+        })
+      } else if (type == VoteType.DOWNVOTE) {
+        await VoteRequest.commentDownVote({
+          threadId,
+          commentId
+        })
+      } else await VoteRequest.commentNeutralVote(threadId)
     } catch (error) {
       alert(error.message)
 
@@ -139,9 +191,11 @@ export {
   ActionType,
   VoteType,
   reveiceThreadDetailActionCreator,
+  setStatusVoteThreadActionCreator,
   addCommentActionCreator,
   setStatusVoteCommentActionCreator,
   asyncGetDetailThread,
+  asyncSetStatusVoteThread,
   asyncAddComment,
   asyncSetStatusVoteComment
 }

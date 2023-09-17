@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa'
 import { convertDate } from '../../utils/date'
 
-function DetailCommentItem ({ comment }) {
+function DetailCommentItem ({ threadId, comment }) {
   const { authUser } = useSelector((states) => states)
   const dispatch = useDispatch()
 
@@ -21,8 +21,8 @@ function DetailCommentItem ({ comment }) {
 
     dispatch(
       asyncSetStatusVoteComment({
+        threadId,
         commentId: comment.id,
-        threadId: comment.threadId,
         type
       })
     )
@@ -77,6 +77,7 @@ function DetailCommentItem ({ comment }) {
 }
 
 DetailCommentItem.propTypes = {
+  threadId: PropTypes.string.isRequired,
   comment: PropTypes.object.isRequired
 }
 
