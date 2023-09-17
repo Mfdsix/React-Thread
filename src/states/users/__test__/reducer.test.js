@@ -15,7 +15,7 @@ describe('usersReducer test', () => {
   })
 
   it('should return correct data when ADD_THREAD', () => {
-    const users = [1,2,3].map((item) => `user-${item}`)
+    const users = [1, 2, 3].map((item) => `user-${item}`)
     const action = {
       type: ActionType.RECEIVE_USERS,
       payload: {

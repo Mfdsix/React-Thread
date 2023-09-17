@@ -14,7 +14,7 @@ function ThreadDetail ({ threadId }) {
 
   const onVote = (type) => {
     if (!authUser) {
-      return alert('Login to vote')
+      return window.alert('Login to vote')
     }
 
     dispatch(

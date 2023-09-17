@@ -1,5 +1,8 @@
 import { AuthRequest } from '../../data/api/dicoding-forum'
-import { setAuthUserActionCreator, unsetAuthUserActionCreator } from '../authUser/action'
+import {
+  setAuthUserActionCreator,
+  unsetAuthUserActionCreator
+} from '../authUser/action'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const ActionType = {
@@ -23,6 +26,8 @@ function asyncSetIsPreload () {
 
       if (!error) {
         dispatch(setAuthUserActionCreator(data.user))
+      } else {
+        dispatch(unsetAuthUserActionCreator())
       }
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
@@ -33,8 +38,4 @@ function asyncSetIsPreload () {
   }
 }
 
-export {
-  ActionType,
-  setIsPreloadActionCreator,
-  asyncSetIsPreload
-}
+export { ActionType, setIsPreloadActionCreator, asyncSetIsPreload }

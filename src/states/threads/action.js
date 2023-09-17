@@ -56,14 +56,14 @@ function asyncAddThread ({ title, body, category }) {
       })
 
       if (error) {
-        alert(message)
+        window.alert(message)
         return false
       }
 
       dispatch(addThreadActionCreator(data.thread))
       return true
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -87,7 +87,7 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
       else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
       else await VoteRequest.neutralVote(threadId)
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
 
       // rollback function
       dispatch(

@@ -80,7 +80,7 @@ function asyncGetDetailThread (threadId) {
       dispatch(reveiceThreadDetailActionCreator(data.detailThread))
       return true
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -104,7 +104,7 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
       else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
       else await VoteRequest.neutralVote(threadId)
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
 
       // rollback function
       dispatch(
@@ -127,14 +127,14 @@ function asyncAddComment ({ threadId, content }) {
       })
 
       if (error) {
-        alert(message)
+        window.alert(message)
         return false
       }
 
       dispatch(addCommentActionCreator(data.comment))
       return true
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -171,7 +171,7 @@ function asyncSetStatusVoteComment ({
         })
       } else await VoteRequest.commentNeutralVote(threadId)
     } catch (error) {
-      alert(error.message)
+      window.alert(error.message)
 
       // rollback function
       dispatch(
