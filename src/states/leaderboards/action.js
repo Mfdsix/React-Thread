@@ -21,13 +21,13 @@ function asyncReceiveLeaderboards () {
       const { error, message, data } = await LeaderBoardRequest.getAll()
 
       if (error) {
-        if(typeof window !== 'undefined') alert(message)
+        if (typeof window !== 'undefined') alert(message)
         return
       }
 
       dispatch(receiveLeaderboardsActionCreator(data.leaderboards))
     } catch (error) {
-      if(typeof window !== 'undefined') alert(error.message)
+      if (typeof window !== 'undefined') alert(error.message)
     } finally {
       dispatch(hideLoading())
     }

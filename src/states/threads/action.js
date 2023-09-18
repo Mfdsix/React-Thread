@@ -56,14 +56,14 @@ function asyncAddThread ({ title, body, category }) {
       })
 
       if (error) {
-        if(typeof window !== 'undefined') alert(message)
+        if (typeof window !== 'undefined') alert(message)
         return false
       }
 
       dispatch(addThreadActionCreator(data.thread))
       return true
     } catch (error) {
-      if(typeof window !== 'undefined') alert(error.message)
+      if (typeof window !== 'undefined') alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
@@ -89,7 +89,7 @@ function asyncSetStatusVoteThread ({ threadId, type = VoteType.UPVOTE, userId })
       else if (type == VoteType.DOWNVOTE) await VoteRequest.downVote(threadId)
       else await VoteRequest.neutralVote(threadId)
     } catch (error) {
-      if(typeof window !== 'undefined') alert(error.message)
+      if (typeof window !== 'undefined') alert(error.message)
 
       // rollback function
       dispatch(

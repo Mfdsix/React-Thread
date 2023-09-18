@@ -19,7 +19,7 @@ function asyncPopulateUsersAndThreads () {
       if (!userError) dispatch(receiveUsersActionCreator(userData.users))
       if (!threadError) dispatch(reveiceThreadsActionCreator(threadData.threads))
     } catch (error) {
-      if(typeof window !== 'undefined') alert(error.message)
+      if (typeof window !== 'undefined') alert(error.message)
     } finally {
       dispatch(hideLoading())
     }

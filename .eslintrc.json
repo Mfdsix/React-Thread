@@ -2,12 +2,12 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true,
-        "cypress/globals": true
+        "node": true
     },
     "extends": [
         "standard",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:storybook/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
