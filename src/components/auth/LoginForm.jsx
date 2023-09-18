@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { asyncSetAuthUser } from '../../states/authUser/action'
+import { Link } from 'react-router-dom'
 import { FaSpinner } from 'react-icons/fa'
+import PropTypes from 'prop-types'
 
-function LoginForm () {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
+function LoginForm ({
+  isLoading = false,
+  onSubmit
+}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onEmailChange = (e) => {
@@ -27,18 +25,10 @@ function LoginForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    setFormLoading(true)
-    const isLoggedIn = await dispatch(
-      asyncSetAuthUser({
-        email,
-        password
-      })
-    )
-    setFormLoading(false)
-
-    if (isLoggedIn) {
-      navigate('/')
-    }
+    onSubmit({
+      email,
+      password
+    })
   }
 
   useEffect(() => {
@@ -93,17 +83,22 @@ function LoginForm () {
               Register
             </Link>
             <button
-              disabled={formDisabled || formLoading}
+              disabled={formDisabled || isLoading}
               type="submit"
               className="btn btn__submit"
             >
-              {formLoading ? <FaSpinner /> : 'Login'}
+              {isLoading ? <FaSpinner /> : 'Login'}
             </button>
           </div>
         </form>
       </div>
     </>
   )
+}
+
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool
 }
 
 export default LoginForm

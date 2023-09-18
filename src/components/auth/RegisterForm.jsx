@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { asyncRegisterUser } from '../../states/users/action'
-import { useDispatch } from 'react-redux'
 import {
   FaSpinner
 } from 'react-icons/fa'
 
-function RegisterForm () {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+function RegisterForm ({
+  isLoading,
+  onSubmit
+}) {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -19,7 +19,6 @@ function RegisterForm () {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const [formLoading, setFormLoading] = useState(false)
   const [formDisabled, setFormDisabled] = useState(false)
 
   const onNameChange = (e) => {
@@ -35,19 +34,9 @@ function RegisterForm () {
   const onFormSubmit = async (e) => {
     e.preventDefault()
 
-    setFormLoading(true)
-    const isRegistered = await dispatch(
-      asyncRegisterUser({
-        name,
-        email,
-        password
-      })
-    )
-    setFormLoading(false)
-
-    if (isRegistered) {
-      navigate('/')
-    }
+    onSubmit({
+      name, email, password
+    })
   }
 
   useEffect(() => {
@@ -117,17 +106,22 @@ function RegisterForm () {
               Login
             </Link>
             <button
-              disabled={formDisabled || formLoading}
+              disabled={formDisabled || isLoading}
               type="submit"
               className="btn btn__submit"
             >
-              { formLoading ? <FaSpinner/> : 'Register' }
+              { isLoading ? <FaSpinner/> : 'Register' }
             </button>
           </div>
         </form>
       </div>
     </>
   )
+}
+
+RegisterForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool
 }
 
 export default RegisterForm
