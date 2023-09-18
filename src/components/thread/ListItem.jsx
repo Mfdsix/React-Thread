@@ -19,7 +19,7 @@ function ListItem ({ thread }) {
 
   const onVote = (type) => {
     if (!authUser) {
-      return alert('Login to vote')
+      return window.alert('Login to vote')
     }
 
     dispatch(
@@ -33,15 +33,7 @@ function ListItem ({ thread }) {
   return (
     <>
       <div className="thread__item my-1">
-        {owner && (
-          <div className="thread__user">
-            <img src={owner.avatar} alt={owner.name} />
-            <div>
-            <h4 className="thread__user__name">{owner.name}</h4>
-            <span className='thread__date'>{ convertDate(thread.createdAt) }</span>
-            </div>
-          </div>
-        )}
+        {owner && <ThreadOwner avatar={owner.avatar} name={owner.name} createdAt={thread.createdAt} />}
 
         <div className="thread__content">
           <div className="thread__content__title">
@@ -95,3 +87,28 @@ ListItem.propTypes = {
 }
 
 export default ListItem
+
+function ThreadOwner ({ avatar, name, createdAt }) {
+  return (
+    <div className="thread__user">
+      <img src={avatar} alt={name} />
+      <div>
+        <h4 className="thread__user__name">{name}</h4>
+        <span className="thread__date">{convertDate(createdAt)}</span>
+      </div>
+    </div>
+  )
+}
+
+ThreadOwner.propTypes = {
+  /** The avatar of thread owner  */
+  avatar: PropTypes.string.isRequired,
+  /** The name of thread owner  */
+  name: PropTypes.string.isRequired,
+  /** The date thread being created  */
+  createdAt: PropTypes.string.isRequired
+}
+
+export {
+  ThreadOwner
+}
