@@ -1,4 +1,4 @@
-const baseUrl = 'http://0.0.0.0:5173'
+const baseUrl = 'http://127.0.0.1:5173'
 
 const time = new Date().getTime()
 const username = 'user' + time
