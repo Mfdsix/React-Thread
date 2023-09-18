@@ -38,24 +38,25 @@ function asyncSetAuthUser ({ email, password }) {
       })
 
       if (loginError) {
-        window.alert(loginMessage)
+        dispatch(unsetAuthUserActionCreator())
+        if(typeof window !== 'undefined') alert(loginMessage)
         return false
       }
-      if (this == this.window) setAccessToken(loginData.token)
+      if (typeof window !== 'undefined') setAccessToken(loginData.token)
 
       const { error: profileError, message: profileMessage, data: profileData } = await AuthRequest.profile()
 
       if (profileError) {
         dispatch(unsetAuthUserActionCreator())
-        if (this == this.window) window.alert(profileMessage)
+        if(typeof window !== 'undefined') alert(profileMessage)
         return false
       };
 
-      dispatch(setAuthUserActionCreator(profileData))
+      dispatch(setAuthUserActionCreator(profileData.user))
       return true
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
-      if (this == this.window) window.alert(error.message)
+      if(typeof window !== 'undefined') alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
