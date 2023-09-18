@@ -38,7 +38,7 @@ function asyncSetAuthUser ({ email, password }) {
       })
 
       if (loginError) {
-        if(alert) alert(loginMessage)
+        if(typeof window !== 'undefined') alert(loginMessage)
         return false
       }
       if (localStorage) setAccessToken(loginData.token)
@@ -47,7 +47,7 @@ function asyncSetAuthUser ({ email, password }) {
 
       if (profileError) {
         dispatch(unsetAuthUserActionCreator())
-        if (alert) alert(profileMessage)
+        if(typeof window !== 'undefined') alert(profileMessage)
         return false
       };
 
@@ -55,7 +55,7 @@ function asyncSetAuthUser ({ email, password }) {
       return true
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
-      if (alert) alert(error.message)
+      if(typeof window !== 'undefined') alert(error.message)
       return false
     } finally {
       dispatch(hideLoading())
