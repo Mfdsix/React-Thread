@@ -36,7 +36,7 @@ function AppHeader () {
         />
 
         {authUser ? (
-          <button onClick={logout} className="btn btn__transparent">
+          <button id='btn-logout' onClick={logout} className="btn btn__transparent">
             <FaSignOutAlt />
           </button>
         ) : (
