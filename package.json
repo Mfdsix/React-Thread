@@ -9,7 +9,8 @@
     "serve": "vite preview",
     "lint": "eslint --ext .jsx,.js ./src",
     "lint:fix": "eslint --fix --ext .jsx,.js ./src",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e": "cypress run"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
