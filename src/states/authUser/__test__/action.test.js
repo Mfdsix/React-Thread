@@ -71,7 +71,7 @@ describe('asyncSetAuthUser thunk', () => {
     const result = await asyncSetAuthUser(payload)(dispatch)
 
     expect(dispatch).toHaveBeenCalledWith(showLoading())
-    expect(dispatch).toHaveBeenCalledWith(setAuthUserActionCreator(profileSuccessResponse.data))
+    expect(dispatch).toHaveBeenCalledWith(setAuthUserActionCreator(profileSuccessResponse.data.user))
     expect(result).toEqual(true)
     expect(dispatch).toHaveBeenCalledWith(hideLoading())
   })

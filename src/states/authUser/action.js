@@ -38,10 +38,11 @@ function asyncSetAuthUser ({ email, password }) {
       })
 
       if (loginError) {
+        dispatch(unsetAuthUserActionCreator())
         if(typeof window !== 'undefined') alert(loginMessage)
         return false
       }
-      if (localStorage) setAccessToken(loginData.token)
+      if (typeof window !== 'undefined') setAccessToken(loginData.token)
 
       const { error: profileError, message: profileMessage, data: profileData } = await AuthRequest.profile()
 
@@ -51,7 +52,7 @@ function asyncSetAuthUser ({ email, password }) {
         return false
       };
 
-      dispatch(setAuthUserActionCreator(profileData))
+      dispatch(setAuthUserActionCreator(profileData.user))
       return true
     } catch (error) {
       dispatch(unsetAuthUserActionCreator())
