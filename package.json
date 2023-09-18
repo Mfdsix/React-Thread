@@ -10,7 +10,8 @@
     "lint": "eslint --ext .jsx,.js ./src",
     "lint:fix": "eslint --fix --ext .jsx,.js ./src",
     "test": "vitest",
-    "e2e": "cypress run"
+    "e2e": "cypress run",
+    "ci:test": "vitest --no-watch && start-server-and-test dev http-get://0.0.0.0:5173 e2e"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -31,6 +32,7 @@
     "eslint-plugin-n": "^16.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
+    "start-server-and-test": "^2.0.0",
     "vite": "^4.3.9",
     "vitest": "^0.34.4"
   }
