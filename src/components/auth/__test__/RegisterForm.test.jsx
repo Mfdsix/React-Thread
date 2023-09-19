@@ -64,12 +64,16 @@ describe('RegisterForm component', () => {
     const email = 'test@mail.com'
     const password = 'super-secret-123'
 
-    render(<RegisterForm onSubmit={onFormSubmit} />)
+    render(
+      <BrowserRouter>
+        <RegisterForm onSubmit={onFormSubmit} />
+      </BrowserRouter>
+    )
     const nameInput = await screen.getByPlaceholderText('Name')
     const emailInput = await screen.getByPlaceholderText('Email')
     const passwordInput = await screen.getByPlaceholderText('Password')
     const registerButton = await screen.getByRole('button', {
-      name: 'Regoster'
+      name: 'Register'
     })
 
     await userEvent.type(nameInput, name)
