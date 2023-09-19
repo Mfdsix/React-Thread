@@ -30,6 +30,8 @@ const threadErrorResponse = {
   message: 'Failed'
 }
 
+window.alert = vi.fn()
+
 describe(' thunk', () => {
   beforeEach(() => {
     ThreadRequest._create = ThreadRequest.create

@@ -55,6 +55,8 @@ const threadErrorResponse = {
   message: 'Failed'
 }
 
+window.alert = vi.fn()
+
 describe('asyncGetDetailThread thunk', () => {
   beforeEach(() => {
     ThreadRequest._getById = ThreadRequest.getById

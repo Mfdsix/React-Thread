@@ -33,6 +33,8 @@ const leaderBoardsErrorResponse = {
   message: 'Failed'
 }
 
+window.alert = vi.fn()
+
 describe('asyncReceiveLeaderboards thunk', () => {
   beforeEach(() => {
     LeaderBoardRequest._getAll = LeaderBoardRequest.getAll

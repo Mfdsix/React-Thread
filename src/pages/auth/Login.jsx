@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AuthLayout from '../../components/layouts/Auth'
 import LoginForm from '../../components/auth/LoginForm'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom/dist'
+import { asyncSetAuthUser } from '../../states/authUser/action'
 
 function Login () {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [formLoading, setFormLoading] = useState(false)
+
+  const onFormSubmit = async ({
+    email, password
+  }) => {
+    setFormLoading(true)
+    const isLoggedIn = await dispatch(
+      asyncSetAuthUser({
+        email,
+        password
+      })
+    )
+    setFormLoading(false)
+
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }
+
   return (
     <>
       <AuthLayout>
@@ -14,7 +39,7 @@ function Login () {
             </div>
           </div>
 
-          <LoginForm/>
+          <LoginForm onSubmit={onFormSubmit} isLoading={formLoading}/>
         </div>
       </AuthLayout>
     </>
