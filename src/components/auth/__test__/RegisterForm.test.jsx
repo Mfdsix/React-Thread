@@ -1,71 +1,82 @@
-import React from "react";
-import { afterEach, describe, expect, it } from "vitest";
+import React from 'react'
 
-import RegisterForm from "../RegisterForm";
-import userEvent from "@testing-library/user-event";
-import matchers from "@testing-library/jest-dom/matchers";
-import { screen, render, cleanup } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-expect.extend(matchers);
+import RegisterForm from '../RegisterForm'
+import { BrowserRouter } from 'react-router-dom'
 
-const onFormSubmit = (params) => {};
+const onFormSubmit = vi.fn()
 
-describe("RegisterForm component", () => {
+describe('RegisterForm component', () => {
   afterEach(() => {
-    cleanup();
-  });
+    cleanup()
+  })
 
-  it("should handle name typing correctly", async () => {
-    const name = "name-123";
+  it('should handle name typing correctly', async () => {
+    const name = 'name-123'
 
-    render(<RegisterForm onSubmit={onFormSubmit} />);
-    const nameInput = await screen.getByPlaceholderText("Name");
+    render(
+      <BrowserRouter>
+        <RegisterForm onSubmit={onFormSubmit} />
+      </BrowserRouter>
+    )
+    const nameInput = await screen.getByPlaceholderText('Name')
 
-    await userEvent.type(nameInput, name);
+    await userEvent.type(nameInput, name)
 
-    expect(nameInput).toHaveValue(name);
-  });
+    expect(nameInput).toHaveValue(name)
+  })
 
-  it("should handle email typing correctly", async () => {
-    const email = "test@mail.com";
+  it('should handle email typing correctly', async () => {
+    const email = 'test@mail.com'
 
-    render(<RegisterForm onSubmit={onFormSubmit} />);
-    const emailInput = await screen.getByPlaceholderText("Email");
+    render(
+      <BrowserRouter>
+        <RegisterForm onSubmit={onFormSubmit} />
+      </BrowserRouter>
+    )
+    const emailInput = await screen.getByPlaceholderText('Email')
 
-    await userEvent.type(emailInput, email);
+    await userEvent.type(emailInput, email)
 
-    expect(emailInput).toHaveValue(email);
-  });
+    expect(emailInput).toHaveValue(email)
+  })
 
-  it("should handle password typing correctly", async () => {
-    const password = "super-secret-123";
+  it('should handle password typing correctly', async () => {
+    const password = 'super-secret-123'
 
-    render(<RegisterForm onSubmit={onFormSubmit} />);
-    const passwordInput = await screen.getByPlaceholderText("Password");
+    render(
+      <BrowserRouter>
+        <RegisterForm onSubmit={onFormSubmit} />
+      </BrowserRouter>
+    )
+    const passwordInput = await screen.getByPlaceholderText('Password')
 
-    await userEvent.type(passwordInput, password);
+    await userEvent.type(passwordInput, password)
 
-    expect(passwordInput).toHaveValue(password);
-  });
+    expect(passwordInput).toHaveValue(password)
+  })
 
-  it("should call onFormSubmit when Register click", async () => {
-    const name = "user-123";
-    const email = "test@mail.com";
-    const password = "super-secret-123";
+  it('should call onFormSubmit when Register click', async () => {
+    const name = 'user-123'
+    const email = 'test@mail.com'
+    const password = 'super-secret-123'
 
-    render(<RegisterForm onSubmit={onFormSubmit} />);
-    const nameInput = await screen.getByPlaceholderText("Name");
-    const emailInput = await screen.getByPlaceholderText("Email");
-    const passwordInput = await screen.getByPlaceholderText("Password");
-    const registerButton = await screen.getByRole("button", {
-      name: "Regoster",
-    });
+    render(<RegisterForm onSubmit={onFormSubmit} />)
+    const nameInput = await screen.getByPlaceholderText('Name')
+    const emailInput = await screen.getByPlaceholderText('Email')
+    const passwordInput = await screen.getByPlaceholderText('Password')
+    const registerButton = await screen.getByRole('button', {
+      name: 'Regoster'
+    })
 
-    await userEvent.type(nameInput, name);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passwordInput, password);
-    await userEvent.click(registerButton);
+    await userEvent.type(nameInput, name)
+    await userEvent.type(emailInput, email)
+    await userEvent.type(passwordInput, password)
+    await userEvent.click(registerButton)
 
-    expect(onFormSubmit).toBeCalledWith(name, email, password);
-  });
-});
+    expect(onFormSubmit).toBeCalledWith({ name, email, password })
+  })
+})

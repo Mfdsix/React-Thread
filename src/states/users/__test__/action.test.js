@@ -19,6 +19,8 @@ const registerErrorResponse = {
   message: 'Failed'
 }
 
+window.alert = vi.fn()
+
 describe('asyncRegisterUser thunk', () => {
   beforeEach(() => {
     AuthRequest._register = AuthRequest.register

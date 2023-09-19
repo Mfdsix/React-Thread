@@ -29,6 +29,8 @@ const profileSuccessResponse = {
   }
 }
 
+window.alert = vi.fn()
+
 describe('asyncSetAuthUser thunk', () => {
   beforeEach(() => {
     AuthRequest._login = AuthRequest.login
